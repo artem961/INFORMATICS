@@ -24,14 +24,14 @@ def parse_json(string):
         return string
 
     # определяем тип того, что передали в функцию и передаём эту грязную работу другой функции, либо возвращаем значение
-    if string.startswith("{") and string.endswith("}"):
+    if re.fullmatch(r"^{.+}$", string):
         return parse_object(string[1:-1]) # Парсинг объекта
-    elif string.startswith("[") and string.endswith("]"):
+    elif re.fullmatch(r"^\[.+\]$", string):
         return parse_array(string[1:-1]) # Парсинг массива
-    elif (":" in string and string.count('"') >= 2) and not (":" in string and string.endswith('"') and string.count('"') == 2): # так много, чтобы значения с двоеточием не попали сюда
+    elif re.fullmatch(r"^\".+\":.+$", string):
         return parse_item(string) # Парсинг пары ключ-значение
     else: # Парсинг строки, числа
-        if string.startswith('"') and string.endswith('"'):
+        if re.fullmatch(r"\".+\"", string):
             string = string[1:-1]
             return string
         try:

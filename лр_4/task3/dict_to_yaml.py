@@ -8,7 +8,7 @@ def dict_to_yaml(inp, indent=0):
             if isinstance(value, (dict, list)): # Если значение ключа это вложенная конструкция, то рекурсивный вызов
                 rezult += f"{spacement}{key}:\n" + dict_to_yaml(value, indent+1)
             else:
-                rezult += f"{spacement}{key}: {value}\n"
+                rezult += f"{spacement}{key}: \"{value}\"\n"
     elif isinstance(inp, list):
         for i in inp:
             if isinstance(i, (dict, list)): # Если значение ключа это вложенная конструкция, то рекурсивный вызов
